@@ -26,14 +26,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* ============================================================================
-FIX: Prevenir saltos cuando el body está fixed
-============================================================================ */
-body:has(.nav-links.active) {
-    /* Evita que el fixed del body cause layout shift */
-    transform: translateZ(0);
-    will-change: transform;
-}
+
 
 /* Asegurar que el navbar no cause overflow cuando está abierto */
 @media (max-width: 900px) {
@@ -374,41 +367,35 @@ MOBILE MENU - Animación Profesional con Staggered Effects
     
     .nav-links {
         position: fixed;
-        top: 72px;
-        left: 0;
-        right: 0;
+    top: 78px;
+    left: 12px;
+    right: 12px;
         background: rgba(15, 23, 42, 0.98);
         backdrop-filter: blur(24px) saturate(180%);
         -webkit-backdrop-filter: blur(24px) saturate(180%);
         flex-direction: column;
         align-items: stretch;
-        padding: 0 20px;
+    padding: 14px;
         gap: 8px;
-        max-height: 0;
         opacity: 0;
-        visibility: hidden;
-        overflow: hidden;
-        transition: 
-            max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-            opacity 0.3s ease,
-            padding 0.4s ease,
-            visibility 0s 0.4s;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    visibility: hidden;
+    transform: translateY(-12px) scale(0.98);
+    transform-origin: top center;
+    pointer-events: none;
+    transition: opacity 0.24s ease, transform 0.24s ease, visibility 0s 0.24s;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    box-shadow: 0 24px 44px rgba(0, 0, 0, 0.42);
         z-index: 999;
     }
     
     /* Estado activo del menú móvil */
     .nav-links.active {
-        max-height: 600px;
-        padding: 24px 20px 32px;
         opacity: 1;
         visibility: visible;
-        transition: 
-            max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-            opacity 0.3s ease 0.1s,
-            padding 0.4s ease,
-            visibility 0s 0s;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    transition: opacity 0.24s ease, transform 0.24s ease, visibility 0s;
     }
     
     /* Links individuales con staggered animation */
@@ -464,6 +451,7 @@ MOBILE MENU - Animación Profesional con Staggered Effects
         inset: 0;
         background: rgba(0, 0, 0, 0.4);
         backdrop-filter: blur(4px);
+      pointer-events: none;
         z-index: 998;
         opacity: 0;
         visibility: hidden;
@@ -2268,6 +2256,8 @@ textarea:focus-visible {
 .hero-particles {
   pointer-events: none;
 }
+
+
 
 
 
