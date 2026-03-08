@@ -1,0 +1,634 @@
+<!-- Scroll Progress Bar -->
+<div class="scroll-progress" [style.width.%]="scrollProgress"></div>
+
+<!-- Skip Link para Accesibilidad -->
+<a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+<!-- Overlay para menú móvil (cierra al hacer click fuera) -->
+<!-- Overlay para menú móvil -->
+<div class="nav-overlay" 
+     *ngIf="isMobileMenuOpen" 
+     (click)="closeMobileMenu()"
+     aria-hidden="true"
+     style="pointer-events: auto;">
+</div>
+<!-- Navbar con efecto glassmorphism -->
+<nav [class.scrolled]="isNavScrolled" [class.mobile-open]="isMobileMenuOpen">
+  <div class="container nav-container">
+    
+    <!-- Logo -->
+    <a href="#" 
+       (click)="scrollToTop(); closeMobileMenu(); $event.preventDefault()" 
+       class="logo" 
+       aria-label="JW Consulting Home">
+      <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+      <span>JW</span> 
+      <span class="logo-accent">CONSULTING</span>
+    </a>
+    
+    <!-- Botón Hamburguesa Mejorado -->
+    <button 
+      class="mobile-toggle" 
+      (click)="toggleMobileMenu()" 
+      [attr.aria-expanded]="isMobileMenuOpen"
+      aria-label="Toggle navigation menu"
+      aria-controls="main-nav"
+      type="button">
+      <i class="fa-solid" 
+         [class.fa-bars]="!isMobileMenuOpen" 
+         [class.fa-xmark]="isMobileMenuOpen"
+         aria-hidden="true">
+      </i>
+    </button>
+    
+    <!-- Menú de Navegación -->
+    <ul class="nav-links" 
+        id="main-nav" 
+        [class.active]="isMobileMenuOpen"
+        role="menubar">
+      
+      <li role="none">
+        <a href="#services" 
+           (click)="scrollToSection('services'); closeMobileMenu(); $event.preventDefault()"
+           role="menuitem">
+          <i class="fa-solid fa-briefcase" aria-hidden="true"></i> 
+          <span>Servicios</span>
+        </a>
+      </li>
+      
+      <li role="none">
+        <a href="#results" 
+           (click)="scrollToSection('results'); closeMobileMenu(); $event.preventDefault()"
+           role="menuitem">
+          <i class="fa-solid fa-chart-line" aria-hidden="true"></i> 
+          <span>Resultados</span>
+        </a>
+      </li>
+      
+      <li role="none">
+        <a href="#tech" 
+           (click)="scrollToSection('tech'); closeMobileMenu(); $event.preventDefault()"
+           role="menuitem">
+          <i class="fa-solid fa-microchip" aria-hidden="true"></i> 
+          <span>Tecnología</span>
+        </a>
+      </li>
+      
+      <li role="none">
+        <a href="#contact" 
+           (click)="scrollToSection('contact'); closeMobileMenu(); $event.preventDefault()" 
+           class="btn-nav"
+           role="menuitem">
+          <i class="fa-regular fa-calendar-check" aria-hidden="true"></i> 
+          <span>Agendar Consultoría</span>
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero Section con video/gradient background -->
+<header class="hero">
+  <div class="hero-bg">
+    <div class="hero-gradient"></div>
+    <div class="hero-particles" aria-hidden="true"></div>
+  </div>
+  
+  <div class="container hero-content">
+    <div class="hero-badge animate-fade-in">
+      <i class="fa-solid fa-bullseye" aria-hidden="true"></i> 
+      <span>Consultoría Estratégica en Tecnología</span>
+    </div>
+    
+    <h1 class="animate-fade-in-up">
+      Transformamos tu empresa con 
+      <span class="highlight typed">{{ currentText }}<span class="cursor" aria-hidden="true">|</span></span>
+    </h1>
+    
+    <p class="hero-subtitle animate-fade-in-up delay-1">
+      Implementamos arquitecturas escalables en <strong>Azure</strong> y <strong>AWS</strong>, 
+      automatizamos procesos críticos y potenciamos tus datos para tomar decisiones que 
+      <span class="highlight-text">impulsan el crecimiento exponencial</span>.
+    </p>
+    
+    <div class="hero-cta animate-fade-in-up delay-2">
+      <a href="#contact" class="btn-primary btn-glow">
+        <i class="fa-regular fa-calendar-plus" aria-hidden="true"></i> 
+        <span>Agendar Diagnóstico Gratuito</span>
+        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+      </a>
+      <a href="#results" class="btn-secondary">
+        <i class="fa-solid fa-play-circle" aria-hidden="true"></i> 
+        <span>Ver Casos de Éxito</span>
+      </a>
+    </div>
+    
+    <div class="hero-trust animate-fade-in-up delay-3">
+      <div class="trust-item">
+        <i class="fa-solid fa-circle-check" aria-hidden="true"></i> 
+        <span><strong>+50</strong> proyectos entregados</span>
+      </div>
+      <div class="trust-item">
+        <i class="fa-solid fa-headset" aria-hidden="true"></i> 
+        <span>Soporte <strong>24/7</strong></span>
+      </div>
+      <div class="trust-item">
+        <i class="fa-solid fa-handshake" aria-hidden="true"></i> 
+        <span>Partners <strong>Microsoft & AWS</strong></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main id="main-content">
+  
+  <!-- Services Section -->
+  <section id="services" class="section section-services">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-tag">
+          <i class="fa-solid fa-star" aria-hidden="true"></i> Nuestras Soluciones
+        </span>
+        <h2 class="section-title">Tecnología que genera <span class="highlight-text">impacto real</span> en tu negocio</h2>
+        <p class="section-description">
+          Cada solución está diseñada para resolver desafíos específicos y entregar 
+          <strong>ROI medible desde los primeros 90 días</strong>.
+        </p>
+      </div>
+      
+      <div class="grid-container">
+        <article class="card card-service animate-on-scroll" *ngFor="let service of services; let i = index" [style.animation-delay]="i * 100 + 'ms'">
+          <div class="card-icon-wrapper">
+            <div class="card-icon" [ngStyle]="{'background': service.color + '15', 'color': service.color, 'box-shadow': '0 8px 25px ' + service.color + '40'}">
+              <i class="{{ service.icon }}" aria-hidden="true"></i>
+            </div>
+            <div class="card-glow" [ngStyle]="{'background': service.color}"></div>
+          </div>
+          
+          <h3>{{ service.title }}</h3>
+          <p class="card-desc">{{ service.description }}</p>
+          
+          <ul class="card-features" [attr.aria-label]="'Características de ' + service.title">
+            <li *ngFor="let feature of service.features">
+              <i class="fa-solid fa-check" aria-hidden="true"></i> 
+              <span>{{ feature }}</span>
+            </li>
+          </ul>
+          
+          <a href="#contact" class="card-cta" (click)="selectService(service.title)" [attr.aria-label]="'Cotizar ' + service.title">
+            <span>Cotizar esta solución</span>
+            <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+          </a>
+        </article>
+      </div>
+      
+      <!-- CTA Section -->
+      <div class="section-cta animate-on-scroll">
+        <div class="cta-box">
+          <h3>¿No encuentras lo que buscas?</h3>
+          <p>Desarrollamos soluciones 100% personalizadas según tus necesidades específicas.</p>
+          <a href="#contact" class="btn-outline">
+            <i class="fa-regular fa-comments" aria-hidden="true"></i> Hablar con un experto
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results / Metrics Section -->
+  <section id="results" class="section section-results">
+    <div class="section-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-tag light">
+          <i class="fa-solid fa-trophy" aria-hidden="true"></i> Resultados Comprobados
+        </span>
+        <h2 class="section-title white">Métricas que <span class="highlight-text">hablan por sí solas</span></h2>
+      </div>
+      
+      <!-- Animated Metrics -->
+      <div class="metrics-grid">
+        <div class="metric-card animate-on-scroll" *ngFor="let metric of metrics; let i = index" [style.animation-delay]="i * 150 + 'ms'">
+          <div class="metric-icon">
+            <i class="{{ metric.icon }}" aria-hidden="true"></i>
+          </div>
+          
+          <div class="metric-value" [attr.data-count]="metric.rawValue">
+            <span class="count-up">0</span><span class="metric-suffix">{{ metric.suffix }}</span>
+          </div>
+          
+          <div class="metric-label">{{ metric.label }}</div>
+          
+          <!-- Barra de progreso animada -->
+          <div class="metric-bar">
+            <div class="metric-progress" [style.width.%]="metric.progress" [style.transition]="'width 1.5s ease-out ' + (i * 200) + 'ms'"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Testimonials Carousel -->
+      <div class="testimonials-wrapper animate-on-scroll">
+        <div class="testimonials">
+          <div class="testimonial-card" *ngFor="let testimonial of testimonials">
+            <div class="testimonial-quote">
+              <i class="fa-solid fa-quote-left" aria-hidden="true"></i>
+            </div>
+            <p class="testimonial-text">"{{ testimonial.text }}"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">
+                <i class="fa-regular fa-user" aria-hidden="true"></i>
+              </div>
+              <div class="author-info">
+                <strong>{{ testimonial.name }}</strong>
+                <span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> {{ testimonial.role }}</span>
+                <small>{{ testimonial.company }}</small>
+              </div>
+            </div>
+            <div class="testimonial-stars" aria-label="5 estrellas">
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack Section -->
+  <section id="tech" class="section section-tech">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-tag">
+          <i class="fa-solid fa-code" aria-hidden="true"></i> Stack Tecnológico
+        </span>
+        <h2 class="section-title">Herramientas <span class="highlight-text">enterprise</span> para soluciones escalables</h2>
+        <p class="section-description">
+          Trabajamos con las tecnologías más robustas del mercado, certificadas y con soporte global.
+        </p>
+      </div>
+      
+      <div class="tech-categories">
+        <div class="tech-category animate-on-scroll" *ngFor="let category of techCategories; let i = index" [style.animation-delay]="i * 100 + 'ms'">
+          <div class="tech-category-header">
+            <i class="{{ category.icon }}" aria-hidden="true"></i>
+            <h4>{{ category.name }}</h4>
+          </div>
+          <div class="tech-badges">
+            <span class="badge" *ngFor="let tech of category.items">
+              <i class="{{ getTechIcon(tech) }}" aria-hidden="true"></i> 
+              <span>{{ tech }}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Certifications -->
+      <div class="certifications animate-on-scroll">
+        <span class="cert-badge">
+          <i class="fa-solid fa-medal" aria-hidden="true"></i> Microsoft Gold Partner
+        </span>
+        <span class="cert-badge">
+          <i class="fa-brands fa-aws" aria-hidden="true"></i> AWS Advanced Consulting Partner
+        </span>
+        <span class="cert-badge">
+          <i class="fa-solid fa-shield-halved" aria-hidden="true"></i> ISO 27001 Compliant
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section class="section section-process">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="section-tag">
+          <i class="fa-solid fa-list-check" aria-hidden="true"></i> Metodología
+        </span>
+        <h2 class="section-title">Cómo trabajamos: <span class="highlight-text">De la idea al impacto</span> en 4 pasos</h2>
+      </div>
+      
+      <div class="process-timeline">
+        <div class="process-step animate-on-scroll" *ngFor="let step of processSteps; let i = index" [class.active]="i === 0">
+          <div class="step-connector" *ngIf="i < processSteps.length - 1" aria-hidden="true"></div>
+          
+          <div class="step-content">
+            <div class="step-number">
+              <span>{{ i + 1 }}</span>
+              <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i>
+            </div>
+            
+            <div class="step-details">
+              <h4>{{ step.title }}</h4>
+              <p>{{ step.description }}</p>
+              <div class="step-meta">
+                <span class="step-deliverable" *ngIf="step.deliverable">
+                  <i class="fa-solid fa-file-circle-check" aria-hidden="true"></i> {{ step.deliverable }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section section-contact">
+    <div class="container">
+      <div class="contact-grid">
+        
+        <!-- Contact Info -->
+        <div class="contact-info animate-on-scroll">
+          <span class="section-tag">
+            <i class="fa-regular fa-envelope" aria-hidden="true"></i> Contáctanos
+          </span>
+          <h2>¿Listo para <span class="highlight-text">transformar</span> tu empresa?</h2>
+          <p class="contact-description">
+            Agenda una consultoría estratégica gratuita de 30 minutos. 
+            Analizaremos tus desafíos y te presentaremos un plan de acción concreto.
+          </p>
+          
+          <div class="contact-cards">
+            <a href="mailto:contacto@jwconsulting.com" class="contact-card">
+              <div class="contact-card-icon">
+                <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+              </div>
+              <div>
+                <strong>Correo Electrónico</strong>
+                <p>jwconsultora&#64;jwconsulting.com</p>
+                <small>Respuesta en menos de 2h</small>
+              </div>
+            </a>
+            
+            <a href="https://wa.me/51996944981" target="_blank" rel="noopener" class="contact-card">
+              <div class="contact-card-icon whatsapp">
+                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+              </div>
+              <div>
+                <strong>WhatsApp Business</strong>
+                <p>+51 996 944 981</p>
+                <small>Atención inmediata</small>
+              </div>
+            </a>
+            
+            <div class="contact-card">
+              <div class="contact-card-icon">
+                <i class="fa-regular fa-clock" aria-hidden="true"></i>
+              </div>
+              <div>
+                <strong>Horario de Atención</strong>
+                <p>Lun - Vie: 9:00 - 18:00 (PET)</p>
+                <small>Soporte 24/7 para clientes</small>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Social Proof Mini -->
+          <div class="contact-trust">
+            <div class="trust-badge">
+              <i class="fa-solid fa-shield-check" aria-hidden="true"></i>
+              <span>Tus datos están 100% seguros</span>
+            </div>
+            <div class="trust-badge">
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
+              <span>4.9/5 en satisfacción de clientes</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Contact Form -->
+        <div class="contact-form-wrapper animate-on-scroll">
+          <form *ngIf="isBrowser" [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+            
+            <div class="form-header">
+              <h3>Agenda tu consultoría gratuita</h3>
+              <p>Completa el formulario y nos contactaremos en menos de 24 horas</p>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">
+                  <i class="fa-regular fa-user" aria-hidden="true"></i> Nombre completo *
+                </label>
+                <input 
+                  id="name" 
+                  formControlName="name" 
+                  type="text" 
+                  placeholder="Ej: Juan Pérez"
+                  [class.error]="name?.invalid && name?.touched"
+                  autocomplete="name">
+                <small *ngIf="name?.invalid && name?.touched" class="error" role="alert">
+                  <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Ingresa tu nombre completo
+                </small>
+              </div>
+              
+              <div class="form-group">
+                <label for="email">
+                  <i class="fa-regular fa-envelope" aria-hidden="true"></i> Correo corporativo *
+                </label>
+                <input 
+                  id="email" 
+                  formControlName="email" 
+                  type="email" 
+                  placeholder="juan&#64;empresa.com"
+                  [class.error]="email?.invalid && email?.touched"
+                  autocomplete="email">
+                <small *ngIf="email?.invalid && email?.touched" class="error" role="alert">
+                  <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Ingresa un email válido
+                </small>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="company">
+                  <i class="fa-solid fa-building" aria-hidden="true"></i> Empresa
+                </label>
+                <input 
+                  id="company" 
+                  formControlName="company" 
+                  type="text" 
+                  placeholder="Nombre de tu empresa"
+                  autocomplete="organization">
+              </div>
+              
+              <div class="form-group">
+                <label for="phone">
+                  <i class="fa-solid fa-phone" aria-hidden="true"></i> Teléfono
+                </label>
+                <input 
+                  id="phone" 
+                  formControlName="phone" 
+                  type="tel" 
+                  placeholder="+51 999 999 999"
+                  autocomplete="tel">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="service">
+                <i class="fa-solid fa-list" aria-hidden="true"></i> Servicio de interés *
+              </label>
+              <select 
+                id="service" 
+                formControlName="service"
+                [class.error]="contactForm.get('service')?.invalid && contactForm.get('service')?.touched">
+                <option value="">Selecciona una opción</option>
+                <option value="ERP">🏢 Desarrollo ERP a medida</option>
+                <option value="BI">📊 Power BI & Analytics</option>
+                <option value="Cloud">☁️ Arquitectura Cloud (Azure/AWS)</option>
+                <option value="Automation">🤖 Automatización & Chatbots IA</option>
+                <option value="Integration">🔗 Integración de Sistemas</option>
+                <option value="Other">💡 Otro / Consultoría general</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="message">
+                <i class="fa-regular fa-comments" aria-hidden="true"></i> Cuéntanos sobre tu proyecto *
+              </label>
+              <textarea 
+                id="message" 
+                formControlName="message" 
+                rows="4" 
+                placeholder="Describe brevemente tus objetivos, desafíos o necesidades..."
+                [class.error]="message?.invalid && message?.touched"></textarea>
+              <small *ngIf="message?.invalid && message?.touched" class="error" role="alert">
+                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Cuéntanos más detalles (mín. 20 caracteres)
+              </small>
+              <span class="char-count">{{ message?.value?.length || 0 }}/500</span>
+            </div>
+            
+            <div class="form-group checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" formControlName="consent" [class.error]="contactForm.get('consent')?.invalid && contactForm.get('consent')?.touched">
+                <span>Acepto la <a href="#" target="_blank">política de privacidad</a> y autorizo el contacto para fines comerciales. *</span>
+              </label>
+              <small *ngIf="contactForm.get('consent')?.invalid && contactForm.get('consent')?.touched" class="error" role="alert">
+                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Debes aceptar para continuar
+              </small>
+            </div>
+            
+            <button type="submit" [disabled]="contactForm.invalid || !contactForm.get('consent')?.value || isSubmitting" class="btn-submit">
+              <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> 
+              <span>{{ isSubmitting ? 'Enviando...' : 'Agendar Consultoría Gratuita' }}</span>
+              <span class="btn-loader" *ngIf="isSubmitting" aria-hidden="true"></span>
+            </button>
+            
+            <p class="form-note">
+              <i class="fa-solid fa-lock" aria-hidden="true"></i> 
+              Tus datos están protegidos con encriptación SSL. No compartimos tu información.
+            </p>
+          </form>
+          
+          <!-- SSR Loading State -->
+          <div *ngIf="!isBrowser" class="form-loading">
+            <i class="fa-solid fa-spinner fa-spin fa-2x" aria-hidden="true"></i>
+            <p>Cargando formulario seguro...</p>
+          </div>
+          
+          <!-- Success State -->
+          <div *ngIf="submitSuccess" class="success-message" role="status" aria-live="polite">
+            <div class="success-icon">
+              <i class="fa-solid fa-circle-check fa-3x" aria-hidden="true"></i>
+            </div>
+            <h3>¡Mensaje enviado exitosamente! 🎉</h3>
+            <p>Nos contactaremos contigo en menos de <strong>24 horas hábiles</strong> para coordinar tu consultoría gratuita.</p>
+            <div class="success-next-steps">
+              <p><strong>Próximos pasos:</strong></p>
+              <ol>
+                <li>Revisaremos tu solicitud</li>
+                <li>Te enviaremos una propuesta preliminar</li>
+                <li>Agendaremos tu sesión de diagnóstico</li>
+              </ol>
+            </div>
+            <button class="btn-secondary" (click)="resetForm()">
+              <i class="fa-solid fa-plus" aria-hidden="true"></i> Enviar otra consulta
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="container footer-content">
+    
+    <div class="footer-brand">
+      <a href="#" class="logo" aria-label="JW Consulting Home">
+        <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+        <span>JW</span> <span class="logo-accent">CONSULTING</span>
+      </a>
+      <p>Transformación digital con enfoque en resultados medibles para empresas que buscan crecer de forma sostenible.</p>
+      
+      <div class="social-links" role="navigation" aria-label="Redes sociales">
+        <a href="#" aria-label="LinkedIn" class="social-link" target="_blank" rel="noopener">
+          <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+        </a>
+        <a href="#" aria-label="Twitter / X" class="social-link" target="_blank" rel="noopener">
+          <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+        </a>
+        <a href="#" aria-label="GitHub" class="social-link" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github" aria-hidden="true"></i>
+        </a>
+        <a href="#" aria-label="WhatsApp" class="social-link" target="_blank" rel="noopener">
+          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+    
+    <div class="footer-links">
+      <div class="footer-column">
+        <h4><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Servicios</h4>
+        <a href="#services"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Desarrollo ERP</a>
+        <a href="#services"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Power BI & Data</a>
+        <a href="#services"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Cloud Architecture</a>
+        <a href="#services"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Automatización IA</a>
+      </div>
+      
+      <div class="footer-column">
+        <h4><i class="fa-solid fa-building" aria-hidden="true"></i> Empresa</h4>
+        <a href="#"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Sobre Nosotros</a>
+        <a href="#results"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Casos de Éxito</a>
+        <a href="#"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Blog & Recursos</a>
+        <a href="#contact"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Contáctanos</a>
+      </div>
+      
+      <div class="footer-column">
+        <h4><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> Legal</h4>
+        <a href="#"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Términos de Servicio</a>
+        <a href="#"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Política de Privacidad</a>
+        <a href="#"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Política de Cookies</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <div class="container">
+      <p>
+        <i class="fa-regular fa-copyright" aria-hidden="true"></i> {{ year }} JW Consulting. Todos los derechos reservados. 
+        <span class="separator">|</span> 
+        RUC: 10747442032
+        <span class="separator">|</span>
+        <a href="#">Política de Privacidad</a>
+      </p>
+    </div>
+  </div>
+  
+  <!-- Back to Top Button -->
+  <button 
+    class="back-to-top" 
+    (click)="scrollToTop()" 
+    [class.visible]="isNavScrolled"
+    aria-label="Volver arriba">
+    <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+  </button>
+</footer>
