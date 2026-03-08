@@ -12,7 +12,7 @@
  * @version 3.0 - High Impact + Responsive + Animations
  */
 
-import { Component, OnInit, inject, PLATFORM_ID, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, inject, PLATFORM_ID, OnDestroy, AfterViewInit, HostListener } from '@angular/core';
 import { CommonModule, isPlatformBrowser, ViewportScroller } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
@@ -73,8 +73,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   // ==========================================================================
   // ESTADO DEL COMPONENTE
   // ==========================================================================
-    scrollProgress = 0;
-private lastScrollY = 0;
+  scrollProgress = 0;
 
   // Formulario de contacto
   contactForm!: FormGroup;
@@ -364,6 +363,10 @@ private handleScroll(): void {
   private setupSmoothScroll(): void {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', (e) => {
+        if (this.isMobileMenuOpen) {
+          return;
+        }
+
         const href = anchor.getAttribute('href');
         if (href && href !== '#') {
           e.preventDefault();
@@ -408,18 +411,36 @@ scrollToTop(): void {
 
 
 closeMobileMenu(): void {
-    if (!this.isBrowser) return;
-    
-    this.isMobileMenuOpen = false;
-    
-    // Restaurar estilos del body
-    document.body.style.cssText = '';
-    
-    // Restaurar posición de scroll SIN animación para evitar jump
-    window.scrollTo({ top: this.lastScrollY, behavior: 'auto' });
-    
-    // Resetear variable
-    this.lastScrollY = 0;
+  this.closeMobileMenuInternal();
+}
+
+/**
+ * Cierra el menú mobile y libera el bloqueo de scroll.
+ */
+private closeMobileMenuInternal(): void {
+  if (!this.isBrowser) return;
+
+  this.isMobileMenuOpen = false;
+}
+
+/**
+ * Navega a una sección desde el menú mobile sin provocar salto al cerrar.
+ */
+navigateToSection(sectionId: string): void {
+  if (!this.isBrowser) return;
+
+  this.closeMobileMenuInternal();
+  requestAnimationFrame(() => this.scrollToSection(sectionId));
+}
+
+/**
+ * Vuelve al inicio desde menú mobile sin pisar el scroll de destino.
+ */
+navigateToTop(): void {
+  if (!this.isBrowser) return;
+
+  this.closeMobileMenuInternal();
+  requestAnimationFrame(() => this.scrollToTop());
 }
 
   // ==========================================================================
@@ -746,25 +767,18 @@ private animateCounters(): void {
 
 
 toggleMobileMenu(): void {
-    if (!this.isBrowser) return;
-    
-    this.isMobileMenuOpen = !this.isMobileMenuOpen;
-    
-    if (this.isMobileMenuOpen) {
-        // GUARDAR posición actual antes de bloquear
-        this.lastScrollY = window.scrollY;
-        
-        // Bloquear scroll de forma compatible con iOS/Android
-        document.body.style.cssText = `
-            position: fixed;
-            top: -${this.lastScrollY}px;
-            width: 100%;
-            overflow: hidden;
-            inset: 0;
-        `;
-    } else {
-        this.closeMobileMenu();
-    }
+  if (!this.isBrowser) return;
+
+  this.isMobileMenuOpen = !this.isMobileMenuOpen;
+}
+
+@HostListener('window:resize')
+onWindowResize(): void {
+  if (!this.isBrowser) return;
+
+  if (window.innerWidth > 900 && this.isMobileMenuOpen) {
+    this.closeMobileMenuInternal();
+  }
 }
 
 
@@ -773,12 +787,6 @@ ngOnDestroy(): void {
     if (this.isBrowser) {
         window.removeEventListener('scroll', this.scrollHandler);
         this.scrollObserver?.disconnect();
-        
-        // Limpieza crítica: si el componente se destruye con menú abierto
-        if (this.isMobileMenuOpen) {
-            document.body.style.cssText = '';
-            window.scrollTo({ top: this.lastScrollY, behavior: 'auto' });
-        }
     }
     if (this.typingTimer) clearTimeout(this.typingTimer);
 }
