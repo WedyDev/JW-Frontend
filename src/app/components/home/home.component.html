@@ -7,10 +7,8 @@
 <!-- Overlay para menú móvil (cierra al hacer click fuera) -->
 <!-- Overlay para menú móvil -->
 <div class="nav-overlay" 
-     *ngIf="isMobileMenuOpen" 
-     (click)="closeMobileMenu()"
-     aria-hidden="true"
-     style="pointer-events: auto;">
+  *ngIf="isMobileMenuOpen"
+  aria-hidden="true">
 </div>
 <!-- Navbar con efecto glassmorphism -->
 <nav [class.scrolled]="isNavScrolled" [class.mobile-open]="isMobileMenuOpen">
@@ -18,7 +16,7 @@
     
     <!-- Logo -->
     <a href="#" 
-       (click)="scrollToTop(); closeMobileMenu(); $event.preventDefault()" 
+       (click)="navigateToTop(); $event.preventDefault()" 
        class="logo" 
        aria-label="JW Consulting Home">
       <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
@@ -49,7 +47,7 @@
       
       <li role="none">
         <a href="#services" 
-           (click)="scrollToSection('services'); closeMobileMenu(); $event.preventDefault()"
+            (click)="navigateToSection('services'); $event.preventDefault()"
            role="menuitem">
           <i class="fa-solid fa-briefcase" aria-hidden="true"></i> 
           <span>Servicios</span>
@@ -58,7 +56,7 @@
       
       <li role="none">
         <a href="#results" 
-           (click)="scrollToSection('results'); closeMobileMenu(); $event.preventDefault()"
+            (click)="navigateToSection('results'); $event.preventDefault()"
            role="menuitem">
           <i class="fa-solid fa-chart-line" aria-hidden="true"></i> 
           <span>Resultados</span>
@@ -67,7 +65,7 @@
       
       <li role="none">
         <a href="#tech" 
-           (click)="scrollToSection('tech'); closeMobileMenu(); $event.preventDefault()"
+            (click)="navigateToSection('tech'); $event.preventDefault()"
            role="menuitem">
           <i class="fa-solid fa-microchip" aria-hidden="true"></i> 
           <span>Tecnología</span>
@@ -76,7 +74,7 @@
       
       <li role="none">
         <a href="#contact" 
-           (click)="scrollToSection('contact'); closeMobileMenu(); $event.preventDefault()" 
+            (click)="navigateToSection('contact'); $event.preventDefault()" 
            class="btn-nav"
            role="menuitem">
           <i class="fa-regular fa-calendar-check" aria-hidden="true"></i> 
