@@ -1,0 +1,16 @@
+# Dependencias y build
+/node_modules
+/dist
+/out-tsc
+/.angular
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Varios
+npm-debug.log
+yarn-error.log
+.DS_Store
+Thumbs.db
