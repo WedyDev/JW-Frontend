@@ -1,0 +1,134 @@
+.process {
+  background:
+    radial-gradient(ellipse at 0% 100%, rgba(70, 214, 160, 0.12), transparent 50%),
+    linear-gradient(180deg, var(--c-ink) 0%, var(--c-ink-2) 100%);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  margin-bottom: 96px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  padding-top: 24px;
+  border-top: 2px solid var(--c-accent-2);
+}
+
+.step-number {
+  margin-bottom: 20px;
+  font-family: var(--font-serif);
+  font-size: 2.25rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--c-accent-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.step h3 {
+  color: #fff;
+  font-size: 1.1875rem;
+  margin-bottom: 10px;
+}
+
+.step p {
+  margin-bottom: 20px;
+}
+
+.step-deliverable {
+  margin-top: auto;
+  margin-bottom: 0 !important;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 0.9375rem;
+  color: #fff;
+}
+
+.step-deliverable span {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.why-title {
+  padding-top: 24px;
+  margin-bottom: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 500;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.why-grid li {
+  padding-right: 28px;
+}
+
+.why-grid li:not(:first-child) {
+  padding-left: 28px;
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.why-grid strong {
+  position: relative;
+  display: block;
+  padding-left: 16px;
+  margin-bottom: 8px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.why-grid strong::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 6px;
+  height: 6px;
+  background: var(--c-accent-2);
+}
+
+.why-grid p {
+  font-size: 0.9375rem;
+}
+
+@media (max-width: 1024px) {
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 48px 32px;
+  }
+
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 0;
+  }
+
+  .why-grid li:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .steps,
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .why-grid li,
+  .why-grid li:not(:first-child) {
+    padding: 0;
+    border-left: 0;
+  }
+}

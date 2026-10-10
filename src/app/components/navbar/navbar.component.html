@@ -1,0 +1,55 @@
+@let copy = t().nav;
+
+<a href="#contenido" class="skip-link">{{ copy.skip }}</a>
+
+@if (menuOpen()) {
+  <div class="nav-overlay" (click)="closeMenu()" aria-hidden="true"></div>
+}
+
+<nav class="nav" [class.is-scrolled]="scrolled()" aria-label="Principal">
+  <div class="container nav-inner">
+    <a href="#inicio" class="logo" (click)="closeMenu()" [attr.aria-label]="copy.home">
+      <app-logo-mark />
+      <span class="logo-text"><strong>JW</strong> Consultora</span>
+    </a>
+
+    <div class="nav-end">
+      <div class="lang" role="group" [attr.aria-label]="copy.language">
+        <app-icon name="globe" />
+        <button type="button" [class.is-active]="lang() === 'es'" [attr.aria-pressed]="lang() === 'es'" (click)="setLang('es')" lang="es">ES</button>
+        <button type="button" [class.is-active]="lang() === 'en'" [attr.aria-pressed]="lang() === 'en'" (click)="setLang('en')" lang="en">EN</button>
+      </div>
+
+      <button
+        type="button"
+        class="menu-toggle"
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="nav-menu"
+        [attr.aria-label]="menuOpen() ? copy.closeMenu : copy.openMenu">
+        <app-icon [name]="menuOpen() ? 'close' : 'menu'" />
+      </button>
+    </div>
+
+    <ul id="nav-menu" class="nav-links" [class.is-open]="menuOpen()" role="list">
+      @for (link of copy.links; track link.id) {
+        <li>
+          <a
+            [href]="'#' + link.id"
+            (click)="closeMenu()"
+            [class.is-active]="activeSection() === link.id"
+            [attr.aria-current]="activeSection() === link.id ? 'true' : null">
+            {{ link.label }}
+          </a>
+        </li>
+      }
+      <li class="nav-cta-item">
+        <a href="#contacto" class="btn btn-primary nav-cta" (click)="closeMenu()">{{ copy.cta }}</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<a href="#inicio" class="back-to-top" [class.is-visible]="scrolled()" [attr.aria-label]="copy.backToTop" [attr.tabindex]="scrolled() ? null : -1">
+  <app-icon name="arrow-up" />
+</a>

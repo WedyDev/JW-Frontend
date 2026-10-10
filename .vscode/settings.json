@@ -1,0 +1,6 @@
+{
+  // Usa el TypeScript del proyecto (5.7) en lugar del que trae VS Code,
+  // así el editor y la extensión de Angular analizan igual que el build.
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}

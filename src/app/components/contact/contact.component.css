@@ -1,0 +1,233 @@
+.contact {
+  background: var(--c-surface-2);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr);
+  gap: clamp(32px, 5vw, 64px);
+  align-items: start;
+}
+
+/* Columna izquierda: título y canales */
+.details {
+  display: grid;
+  margin-bottom: 28px;
+  border-top: 1px solid var(--c-line);
+}
+
+.details div {
+  display: grid;
+  grid-template-columns: 136px minmax(0, 1fr);
+  gap: 16px;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--c-line);
+}
+
+.details dt {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-subtle);
+}
+
+.details dd {
+  font-weight: 500;
+  color: var(--c-ink);
+}
+
+.details a {
+  text-decoration: none;
+}
+
+.details a:hover {
+  color: var(--c-accent);
+  text-decoration: underline;
+}
+
+.whatsapp-direct app-icon {
+  color: #1faa59;
+}
+
+.whatsapp-direct:hover app-icon {
+  color: #fff;
+  transform: none;
+}
+
+/* Columna derecha: formulario */
+.form-card {
+  min-width: 0;
+  padding: clamp(24px, 3.5vw, 36px);
+  background: #fff;
+  border: 1px solid var(--c-line);
+  border-top: 3px solid var(--c-accent);
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+}
+
+.form-title {
+  font-family: var(--font-serif);
+  font-size: 1.375rem;
+  font-weight: 500;
+  margin-bottom: 22px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-ink);
+}
+
+label > span[aria-hidden] {
+  color: var(--c-danger);
+}
+
+input:not([type='checkbox']),
+select,
+textarea {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid #cfccc4;
+  border-radius: var(--radius);
+  background: #fff;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: var(--c-subtle);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 1px var(--c-accent);
+}
+
+[aria-invalid='true'] {
+  border-color: var(--c-danger) !important;
+}
+
+select {
+  appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2315181d' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 108px;
+}
+
+.field-help {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.counter {
+  margin-left: auto;
+  margin-top: 4px;
+  font-size: 0.8125rem;
+  color: var(--c-subtle);
+}
+
+.error {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.875rem;
+  color: var(--c-danger);
+}
+
+.consent {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--c-muted);
+  cursor: pointer;
+}
+
+.consent input {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  flex-shrink: 0;
+  accent-color: var(--c-accent);
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 24px;
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid var(--c-line);
+}
+
+.success h3 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.success p {
+  color: var(--c-muted);
+  margin-bottom: 28px;
+  overflow-wrap: anywhere;
+}
+
+.success a {
+  color: var(--c-accent);
+}
+
+@media (max-width: 1024px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .details div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .form-actions .btn,
+  .whatsapp-direct {
+    width: 100%;
+  }
+}

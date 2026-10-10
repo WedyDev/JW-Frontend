@@ -1,0 +1,59 @@
+@let copy = t().hero;
+
+<header id="inicio" class="hero">
+  <div class="hero-shapes" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">{{ copy.eyebrow }}</p>
+
+        <h1>{{ copy.title }} <span>{{ copy.titleAccent }}</span></h1>
+
+        <p class="hero-subtitle">{{ copy.subtitle }}</p>
+
+        <div class="hero-cta">
+          <a href="#contacto" class="btn btn-primary">
+            {{ copy.ctaPrimary }}
+            <app-icon name="arrow-right" />
+          </a>
+          <a href="#proyectos" class="btn btn-outline-light">{{ copy.ctaSecondary }}</a>
+        </div>
+
+        <p class="legal">{{ company.legalName }} · {{ copy.facts.ruc }} {{ company.ruc }} · {{ copy.facts.locationValue }}</p>
+      </div>
+
+      <aside class="panel" [attr.aria-label]="copy.panel.title">
+        <p class="panel-title">{{ copy.panel.title }}</p>
+        <ul class="panel-list" role="list">
+          @for (item of copy.panel.items; track item.title) {
+            <li>
+              <span class="panel-icon"><app-icon [name]="item.icon" /></span>
+              <div>
+                <strong>{{ item.title }}</strong>
+                <p>{{ item.text }}</p>
+              </div>
+            </li>
+          }
+        </ul>
+        <div class="panel-clients">
+          <span>{{ copy.panel.clients }}</span>
+          <ul role="list">
+            @for (client of clients; track client.name) {
+              <li><strong>{{ client.name }}</strong> {{ client.suffix }}</li>
+            }
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    <div class="ecosystems">
+      <p class="ecosystems-label">{{ copy.ecosystems.label }}</p>
+      <ul role="list">
+        @for (item of copy.ecosystems.items; track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+    </div>
+  </div>
+</header>

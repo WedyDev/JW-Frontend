@@ -1,0 +1,136 @@
+@let copy = t().contact;
+
+<section id="contacto" class="section contact" aria-labelledby="contacto-title">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-intro">
+        <app-section-head index="05" [label]="copy.label" titleId="contacto-title" [title]="copy.title" [stacked]="true">
+          {{ copy.lead }}
+        </app-section-head>
+
+        <dl class="details" appReveal>
+          <div>
+            <dt>{{ copy.channels.whatsapp }}</dt>
+            <dd><a [href]="whatsappHref()" target="_blank" rel="noopener">{{ company.whatsappDisplay }}</a></dd>
+          </div>
+          <div>
+            <dt>{{ copy.channels.email }}</dt>
+            <dd><a [href]="'mailto:' + company.email">{{ emailUser }}&#64;<wbr />{{ emailDomain }}</a></dd>
+          </div>
+          <div>
+            <dt>{{ copy.channels.schedule }}</dt>
+            <dd>{{ copy.channels.scheduleValue }}</dd>
+          </div>
+          <div>
+            <dt>{{ copy.channels.legal }}</dt>
+            <dd>{{ company.legalName }}<br />RUC {{ company.ruc }}</dd>
+          </div>
+        </dl>
+
+        <a [href]="whatsappHref()" target="_blank" rel="noopener" class="btn btn-outline whatsapp-direct">
+          <app-icon name="whatsapp" />
+          {{ copy.channels.direct }}
+        </a>
+      </div>
+
+      <div class="form-card" appReveal [revealDelay]="80">
+        @if (sent()) {
+          <div class="success" role="status">
+            <h3>{{ copy.success.title }}</h3>
+            <p>
+              {{ copy.success.before }} <strong>{{ copy.success.send }}</strong>.
+              {{ copy.success.after }} <a [href]="'mailto:' + company.email">{{ company.email }}</a>.
+            </p>
+            <button type="button" class="btn btn-outline" (click)="reset()">{{ copy.success.again }}</button>
+          </div>
+        } @else {
+          <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+            <h3 class="form-title">{{ copy.formTitle }}</h3>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="name">{{ copy.fields.name }} <span aria-hidden="true">*</span></label>
+                <input id="name" formControlName="name" type="text" autocomplete="name" required
+                  [attr.aria-invalid]="showError('name')" aria-describedby="name-error" />
+                @if (showError('name')) {
+                  <small id="name-error" class="error">{{ copy.errors.name }}</small>
+                }
+              </div>
+
+              <div class="field">
+                <label for="company">{{ copy.fields.company }}</label>
+                <input id="company" formControlName="company" type="text" autocomplete="organization" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="email">{{ copy.fields.email }} <span aria-hidden="true">*</span></label>
+                <input id="email" formControlName="email" type="email" autocomplete="email" required
+                  [attr.aria-invalid]="showError('email')" aria-describedby="email-error" />
+                @if (showError('email')) {
+                  <small id="email-error" class="error">{{ copy.errors.email }}</small>
+                }
+              </div>
+
+              <div class="field">
+                <label for="phone">{{ copy.fields.phone }}</label>
+                <input id="phone" formControlName="phone" type="tel" autocomplete="tel" placeholder="+51"
+                  [attr.aria-invalid]="showError('phone')" aria-describedby="phone-error" />
+                @if (showError('phone')) {
+                  <small id="phone-error" class="error">{{ copy.errors.phone }}</small>
+                }
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="service">{{ copy.fields.service }} <span aria-hidden="true">*</span></label>
+              <select id="service" formControlName="service" required
+                [attr.aria-invalid]="showError('service')" aria-describedby="service-error">
+                <option value="" disabled>{{ copy.fields.servicePlaceholder }}</option>
+                @for (option of copy.serviceOptions; track option.id) {
+                  <option [value]="option.id">{{ option.label }}</option>
+                }
+              </select>
+              @if (showError('service')) {
+                <small id="service-error" class="error">{{ copy.errors.service }}</small>
+              }
+            </div>
+
+            <div class="field">
+              <label for="message">{{ copy.fields.message }} <span aria-hidden="true">*</span></label>
+              <textarea id="message" formControlName="message" rows="4" required [attr.maxlength]="maxMessage"
+                [placeholder]="copy.fields.messagePlaceholder"
+                [attr.aria-invalid]="showError('message')" aria-describedby="message-help"></textarea>
+              <div id="message-help" class="field-help">
+                @if (showError('message')) {
+                  <small class="error">{{ copy.errors.message }}</small>
+                }
+                <small class="counter">{{ form.controls.message.value.length }}/{{ maxMessage }}</small>
+              </div>
+            </div>
+
+            <label class="consent">
+              <input type="checkbox" formControlName="consent" required [attr.aria-invalid]="showError('consent')" />
+              <span>{{ copy.consent(company.legalName) }}</span>
+            </label>
+            @if (showError('consent')) {
+              <small class="error">{{ copy.errors.consent }}</small>
+            }
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                <app-icon name="whatsapp" />
+                {{ copy.submit }}
+              </button>
+              <a [href]="'mailto:' + company.email" class="link-arrow">
+                {{ copy.emailAlt }}
+                <app-icon name="arrow-right" />
+              </a>
+            </div>
+          </form>
+        }
+      </div>
+    </div>
+  </div>
+</section>

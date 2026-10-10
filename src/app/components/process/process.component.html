@@ -1,0 +1,32 @@
+@let copy = t().process;
+
+<section id="metodologia" class="section process" aria-labelledby="metodologia-title">
+  <div class="container">
+    <app-section-head index="02" [label]="copy.label" titleId="metodologia-title" [dark]="true" [title]="copy.title">
+      {{ copy.lead }}
+    </app-section-head>
+
+    <ol class="steps" role="list">
+      @for (step of copy.steps; track $index; let i = $index) {
+        <li class="step" appReveal [revealDelay]="i * 80">
+          <span class="step-number" aria-hidden="true">{{ (i + 1).toString().padStart(2, '0') }}</span>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.description }}</p>
+          <p class="step-deliverable"><span>{{ copy.deliverable }}</span>{{ step.deliverable }}</p>
+        </li>
+      }
+    </ol>
+
+    <div class="why">
+      <h3 class="why-title">{{ copy.whyTitle }}</h3>
+      <ul class="why-grid" role="list">
+        @for (item of copy.why; track $index; let i = $index) {
+          <li appReveal [revealDelay]="i * 80">
+            <strong>{{ item.title }}</strong>
+            <p>{{ item.text }}</p>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>

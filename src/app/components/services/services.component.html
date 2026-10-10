@@ -1,0 +1,33 @@
+@let copy = t().services;
+
+<section id="servicios" class="section" aria-labelledby="servicios-title">
+  <div class="container">
+    <app-section-head index="01" [label]="copy.label" titleId="servicios-title" [title]="copy.title">
+      {{ copy.lead }}
+    </app-section-head>
+
+    <div class="services-grid">
+      @for (service of copy.items; track service.id; let i = $index) {
+        <article class="service" appReveal [revealDelay]="(i % 3) * 80">
+          <div class="service-top">
+            <span class="service-icon"><app-icon [name]="icons[service.id]" /></span>
+            <span class="service-index">{{ (i + 1).toString().padStart(2, '0') }}</span>
+          </div>
+          <h3>{{ service.title }}</h3>
+          <p class="service-desc">{{ service.description }}</p>
+
+          <ul class="service-features" role="list">
+            @for (feature of service.features; track feature) {
+              <li>{{ feature }}</li>
+            }
+          </ul>
+
+          <a href="#contacto" class="link-arrow" (click)="quote(service.id)">
+            {{ copy.cta }}<span class="sr-only">: {{ service.title }}</span>
+            <app-icon name="arrow-right" />
+          </a>
+        </article>
+      }
+    </div>
+  </div>
+</section>
